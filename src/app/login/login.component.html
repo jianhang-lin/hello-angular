@@ -9,6 +9,8 @@
                #usernameRef="ngModel"
                required
                minlength="3"
+               (focus)="clearUsername()"
+               [class.defalutColor]="defaultUsernameColor"
         />
       </label>
       <div *ngIf="usernameRef.errors?.required">this is required</div>
@@ -19,6 +21,8 @@
                [(ngModel)]="password"
                #passwordRef="ngModel"
                required
+               (focus)="clearPassword()"
+               [class.defalutColor]="defaultPasswordColor"
         />
       </label>
       <div *ngIf="passwordRef.errors?.required">this is required</div>

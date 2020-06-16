@@ -7,8 +7,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  username = '';
-  password = '';
+  username = '请输入用户名';
+  password = '请输入密码';
+  defaultUsernameColor = true;
+  defaultPasswordColor = true;
   constructor(@Inject('auth') private service) { }
 
   ngOnInit(): void {
@@ -16,5 +18,15 @@ export class LoginComponent implements OnInit {
 
   onSubmit(formValue) {
     console.log('auth result is:' + this.service.loginWithCredentials(formValue.login.username, formValue.login.paramMap));
+  }
+
+  clearUsername() {
+    this.username = '';
+    this.defaultUsernameColor = false;
+  }
+
+  clearPassword() {
+    this.password = '';
+    this.defaultPasswordColor = false;
   }
 }
