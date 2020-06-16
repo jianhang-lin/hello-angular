@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -7,13 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  text = 'Hello LoginComponent';
-  constructor() { }
+  constructor(@Inject('auth') private service) { }
 
   ngOnInit(): void {
   }
 
   onClick(username, password) {
-    console.log('username:' + username + '\n\r' + 'password:' + password);
+    console.log('auth result is: ' + this.service.loginWithCredentials(username, password));
   }
 }
