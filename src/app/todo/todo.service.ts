@@ -14,14 +14,14 @@ export class TodoService {
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
   constructor(private http: HttpClient) { }
 
-  addTodo(desc: string): Observable<Todo[]> {
+  addTodo(desc: string): Observable<Todo> {
     const todo: Todo = {
       id: v4(),
       desc,
       completed: false
     };
     const uri = `${this.BASE_CONFIG}/${this.API_URL}`;
-    return this.http.post<Todo[]>(uri, JSON.stringify(todo), {headers: this.headers});
+    return this.http.post<Todo>(uri, JSON.stringify(todo), {headers: this.headers});
   }
 
 }

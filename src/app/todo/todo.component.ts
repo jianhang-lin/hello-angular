@@ -20,8 +20,8 @@ export class TodoComponent implements OnInit {
   addTodo() {
     this.service
       .addTodo(this.desc)
-      .subscribe(todos => {
-        this.todos = [...todos];
+      .subscribe(todo => {
+        this.todos = [...this.todos, todo];
         this.desc = '';
       });
   }
