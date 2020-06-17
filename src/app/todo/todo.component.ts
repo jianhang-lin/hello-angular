@@ -18,7 +18,11 @@ export class TodoComponent implements OnInit {
   }
 
   addTodo() {
-    this.todos = this.service.addTodo(this.desc);
-    this.desc = '';
+    this.service
+      .addTodo(this.desc)
+      .subscribe(todos => {
+        this.todos = [...todos];
+        this.desc = '';
+      });
   }
 }

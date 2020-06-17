@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { v4 } from 'uuid';
 import { Todo } from './todo.model';
 
@@ -7,16 +9,19 @@ import { Todo } from './todo.model';
 })
 export class TodoService {
 
-  todos: Todo[] = [];
-  constructor() { }
+  private readonly BASE_CONFIG = 'http://localhost:8080';
+  private readonly API_URL = '/api/todos';
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
+  constructor(private http: HttpClient) { }
 
-  addTodo(todoItem: string): Todo[] {
-    const todo = {
+  addTodo(desc: string): Observable<Todo[]> {
+    const todo: Todo = {
       id: v4(),
-      desc: todoItem,
+      desc,
       completed: false
     };
-    this.todos.push(todo);
-    return this.todos;
+    const uri = `${this.BASE_CONFIG}/${this.API_URL}`;
+    return this.http.post<Todo[]>(uri, JSON.stringify(todo), {headers: this.headers});
   }
+
 }
