@@ -24,4 +24,19 @@ export class TodoService {
     return this.http.post<Todo>(uri, JSON.stringify(todo), {headers: this.headers});
   }
 
+  toggleTodo(todo: Todo): Observable<Todo> {
+    const url = `${this.BASE_CONFIG}/${this.API_URL}/${todo.id}`;
+    console.log(url);
+    const updateTodo = Object.assign({}, todo, {completed: !todo.completed});
+    return this.http.put<Todo>(url, JSON.stringify(updateTodo), {headers: this.headers});
+  }
+
+  deleteTodoById(id: string): Observable<void> {
+    const url = `${this.BASE_CONFIG}/${this.API_URL}/${id}`;
+    return this.http.delete<void>(url, {headers: this.headers});
+  }
+
+  getTodos(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}`);
+  }
 }
