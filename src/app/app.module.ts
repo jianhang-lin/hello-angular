@@ -7,13 +7,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { TodoComponent } from './todo/todo.component';
+import { TodoFooterComponent } from './todo/todo-footer/todo-footer.component';
 import { AuthService } from './core/auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    TodoComponent
+    TodoComponent,
+    TodoFooterComponent
   ],
   imports: [
     BrowserModule,
