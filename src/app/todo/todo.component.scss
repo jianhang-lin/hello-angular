@@ -168,7 +168,7 @@ label[for='toggle-all'] {
 .todo-list li.editing:last-child {
   margin-bottom: -1px;
 }
-.footer {
+/*.footer {
   color: #777;
   padding: 10px 15px;
   height: 20px;
@@ -231,7 +231,7 @@ html .clear-completed:active {
 }
 .clear-completed:hover {
   text-decoration: underline;
-}
+}*/
 /*
 Hack to remove background from Mobile Safari.
 Can't use it globally since it destroys checkboxes in Firefox
