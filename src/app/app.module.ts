@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { TodoComponent } from './todo/todo.component';
 import { TodoFooterComponent } from './todo/todo-footer/todo-footer.component';
+import { TodoHeaderComponent } from './todo/todo-header/todo-header.component';
 import { AuthService } from './core/auth.service';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { AuthService } from './core/auth.service';
     AppComponent,
     LoginComponent,
     TodoComponent,
-    TodoFooterComponent
+    TodoFooterComponent,
+    TodoHeaderComponent
   ],
   imports: [
     BrowserModule,
