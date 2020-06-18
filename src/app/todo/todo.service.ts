@@ -10,7 +10,7 @@ import { Todo } from './todo.model';
 export class TodoService {
 
   private readonly BASE_CONFIG = 'http://localhost:8080';
-  private readonly API_URL = '/api/todos';
+  private readonly API_URL = 'api/todos';
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
   constructor(private http: HttpClient) { }
 
