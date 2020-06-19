@@ -20,7 +20,7 @@ export class TodoListComponent implements OnInit {
 
   @Output() doRemoveTodo = new EventEmitter<Todo>();
   @Output() doToggleTodo = new EventEmitter<Todo>();
-
+  @Output() doToggleAll = new EventEmitter<boolean>();
   constructor() { }
 
   ngOnInit(): void {
@@ -34,4 +34,7 @@ export class TodoListComponent implements OnInit {
     this.doToggleTodo.emit(todo);
   }
 
+  doToggleAllTriggered() {
+    this.doToggleAll.emit(true);
+  }
 }

@@ -77,4 +77,8 @@ export class TodoComponent implements OnInit {
       mergeMap(todo => this.service.deleteTodoById(todo.id))
     ).subscribe(() => this.todos = [...activeTodos]);
   }
+
+  toggleAll() {
+    this.todos.forEach(todo => this.toggleTodo(todo));
+  }
 }
