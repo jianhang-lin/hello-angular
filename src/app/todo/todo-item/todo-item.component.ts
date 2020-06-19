@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-todo-item',
@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoItemComponent implements OnInit {
 
+  @Input() isChecked = false;
+  @Input() todoDesc = '';
+  @Output() doToggleTriggered = new EventEmitter<boolean>();
+  @Output() doRemoveTriggered = new EventEmitter<boolean>();
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  toggle() {
+    this.doToggleTriggered.emit(true);
+  }
+
+  remove() {
+    this.doRemoveTriggered.emit(true);
+  }
 }
