@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { TodoComponent } from './todo/todo.component';
 
-
-const routes: Routes = [
-  {path: '', redirectTo: 'todo', pathMatch: 'full'},
-  {path: 'todo', component: TodoComponent},
-  {path: 'login', component: LoginComponent}
+export const routes: Routes = [
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
+  {path: 'todo', redirectTo: 'todo'},
 ];
 
 @NgModule({
