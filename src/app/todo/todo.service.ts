@@ -38,4 +38,13 @@ export class TodoService {
   getTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}`);
   }
+
+  filterTodos(filter: string): Observable<Todo[]> {
+    switch (filter) {
+      case 'ACTIVE': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=false`);
+      case 'COMPLETED': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=true`);
+      default:
+        return this.getTodos();
+    }
+  }
 }

@@ -1,19 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { TodoService } from './todo.service';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Todo } from './todo.model';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.scss'],
-  providers: [TodoService]
+  styleUrls: ['./todo.component.scss']
 })
 export class TodoComponent implements OnInit {
 
   todos: Todo[] = [];
   desc = '';
-  constructor(private service: TodoService) { }
+  constructor(@Inject('todoService') private service,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
+    this.route.params.forEach((params: Params) => {
+      const filter = params.filter;
+      this.filterTodos(filter);
+    });
   }
 
   addTodo() {
@@ -53,5 +58,13 @@ export class TodoComponent implements OnInit {
 
   onTextChanges(value) {
     this.desc = value;
+  }
+
+  filterTodos(filter: string): void {
+    this.service
+      .filterTodos(filter)
+      .subscribe(todos => {
+        this.todos = [...todos];
+      });
   }
 }
