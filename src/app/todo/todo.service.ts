@@ -26,7 +26,6 @@ export class TodoService {
 
   toggleTodo(todo: Todo): Observable<Todo> {
     const url = `${this.BASE_CONFIG}/${this.API_URL}/${todo.id}`;
-    console.log(url);
     const updateTodo = Object.assign({}, todo, {completed: !todo.completed});
     return this.http.put<Todo>(url, JSON.stringify(updateTodo), {headers: this.headers});
   }

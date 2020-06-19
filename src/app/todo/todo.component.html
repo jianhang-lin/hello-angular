@@ -5,15 +5,12 @@
   </ul>
 </div>-->
 <section class="todoapp">
-  <header class="header">
-    <h1>Todos</h1>
-    <input class="new-todo"
-           placeholder="What needs to be done?"
-           autofocus=""
-           [(ngModel)]="desc"
-           (keyup.enter)="addTodo()"
-    >
-  </header>
+  <app-todo-header
+    placeholder="What do you want"
+    delay="400"
+    (textChanges)="onTextChanges($event)"
+    (doEnterUp)="addTodo()">
+  </app-todo-header>
   <section class="main" *ngIf="todos?.length > 0">
     <input class="toggle-all" type="checkbox">
     <ul class="todo-list">
