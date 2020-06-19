@@ -27,7 +27,7 @@ export class TodoService {
   toggleTodo(todo: Todo): Observable<Todo> {
     const url = `${this.BASE_CONFIG}/${this.API_URL}/${todo.id}`;
     const updateTodo = Object.assign({}, todo, {completed: !todo.completed});
-    return this.http.put<Todo>(url, JSON.stringify(updateTodo), {headers: this.headers});
+    return this.http.patch<Todo>(url, JSON.stringify(updateTodo), {headers: this.headers});
   }
 
   deleteTodoById(id: string): Observable<void> {
