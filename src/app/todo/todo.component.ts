@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Todo } from './todo.model';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { from } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './todo.component.html',
@@ -66,5 +68,13 @@ export class TodoComponent implements OnInit {
       .subscribe(todos => {
         this.todos = [...todos];
       });
+  }
+
+  clearCompleted() {
+    const completedTodos = this.todos.filter(todo => todo.completed === true);
+    const activeTodos = this.todos.filter(todo => todo.completed === false);
+    from(completedTodos).pipe(
+      mergeMap(todo => this.service.deleteTodoById(todo.id))
+    ).subscribe(() => this.todos = [...activeTodos]);
   }
 }

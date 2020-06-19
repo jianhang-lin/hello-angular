@@ -24,4 +24,4 @@
     </ul>
   </section>
 </section>
-<app-todo-footer [itemCount]="todos?.length"></app-todo-footer>
+<app-todo-footer [itemCount]="todos?.length" (doClear)="clearCompleted()"></app-todo-footer>
