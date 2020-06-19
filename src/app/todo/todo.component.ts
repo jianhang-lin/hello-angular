@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Todo } from './todo.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { from } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './todo.component.html',
@@ -32,21 +32,23 @@ export class TodoComponent implements OnInit {
       });
   }
 
-  toggleTodo(todo: Todo) {
+  toggleTodo(todo: Todo): Observable<Todo> {
     const i = this.todos.indexOf(todo);
-    this.service
+    return this.service
       .toggleTodo(todo)
       .subscribe(t => {
         this.todos = [...this.todos.slice(0, i), t, ...this.todos.slice(i + 1)];
+        return null;
       });
   }
 
-  removeTodo(todo: Todo) {
+  removeTodo(todo: Todo): Observable<Todo> {
     const i = this.todos.indexOf(todo);
-    this.service
+    return this.service
       .deleteTodoById(todo.id)
       .subscribe(() => {
         this.todos = [...this.todos.slice(0, i), ...this.todos.slice(i + 1)];
+        return null;
       });
   }
 
@@ -79,6 +81,6 @@ export class TodoComponent implements OnInit {
   }
 
   toggleAll() {
-    this.todos.forEach(todo => this.toggleTodo(todo));
+    from(this.todos).pipe(map(todo => this.toggleTodo(todo))).subscribe(() => console.log('success toggleAll.'));
   }
 }
