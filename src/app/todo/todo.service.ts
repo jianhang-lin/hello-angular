@@ -16,11 +16,12 @@ export class TodoService {
   constructor(private http: HttpClient) { }
 
   addTodo(desc: string): Observable<Todo> {
+    const userId: number = +localStorage.getItem('userId');
     const todo: Todo = {
       id: v4(),
       desc,
       completed: false,
-      userId: this.userId
+      userId
     };
     const uri = `${this.BASE_CONFIG}/${this.API_URL}`;
     return this.http.post<Todo>(uri, JSON.stringify(todo), {headers: this.headers});
@@ -38,13 +39,15 @@ export class TodoService {
   }
 
   getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?userId=${this.userId}`);
+    const userId: number = +localStorage.getItem('userId');
+    return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?userId=${userId}`);
   }
 
   filterTodos(filter: string): Observable<Todo[]> {
+    const userId: number = +localStorage.getItem('userId');
     switch (filter) {
-      case 'ACTIVE': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=false&userId=${this.userId}`);
-      case 'COMPLETED': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=true&userId=${this.userId}`);
+      case 'ACTIVE': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=false&userId=${userId}`);
+      case 'COMPLETED': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=true&userId=${userId}`);
       default:
         return this.getTodos();
     }
