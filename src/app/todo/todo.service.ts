@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { v4 } from 'uuid';
-import { Todo } from './todo.model';
+import { Todo } from '../domain/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +12,15 @@ export class TodoService {
   private readonly BASE_CONFIG = 'http://localhost:8080';
   private readonly API_URL = 'api/todos';
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
+  userId = 1;
   constructor(private http: HttpClient) { }
 
   addTodo(desc: string): Observable<Todo> {
     const todo: Todo = {
       id: v4(),
       desc,
-      completed: false
+      completed: false,
+      userId: this.userId
     };
     const uri = `${this.BASE_CONFIG}/${this.API_URL}`;
     return this.http.post<Todo>(uri, JSON.stringify(todo), {headers: this.headers});
@@ -36,13 +38,13 @@ export class TodoService {
   }
 
   getTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}`);
+    return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?userId=${this.userId}`);
   }
 
   filterTodos(filter: string): Observable<Todo[]> {
     switch (filter) {
-      case 'ACTIVE': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=false`);
-      case 'COMPLETED': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=true`);
+      case 'ACTIVE': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=false&userId=${this.userId}`);
+      case 'COMPLETED': return this.http.get<Todo[]>(`${this.BASE_CONFIG}/${this.API_URL}?completed=true&userId=${this.userId}`);
       default:
         return this.getTodos();
     }

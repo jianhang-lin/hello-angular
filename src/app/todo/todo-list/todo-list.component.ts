@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Todo} from '../todo.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Todo } from '../../domain/entities';
 
 @Component({
   selector: 'app-todo-list',

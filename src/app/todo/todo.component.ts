@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Todo } from './todo.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { from, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { Todo } from '../domain/entities';
 
 @Component({
   templateUrl: './todo.component.html',
