@@ -6,6 +6,7 @@ export const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'todo', redirectTo: 'todo/ALL'},
+  {path: 'playground', loadChildren: () => import('./playground/playground.module').then(mod => mod.PlaygroundModule)},
 ];
 
 @NgModule({
