@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PlaygroundComponent } from './playground.component';
 import {OneComponent} from './one/one.component';
 import {TwoComponent} from './two/two.component';
+import {ThreeComponent} from './three/three.component';
 
 export const routes: Routes = [
   {
@@ -11,7 +12,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'one',
-        component: OneComponent
+        component: OneComponent,
+        children: [
+          {
+            path: 'three',
+            component: ThreeComponent
+          }
+        ]
       },
       {
         path: 'two',
