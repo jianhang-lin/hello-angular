@@ -1,15 +1,28 @@
 <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed>
   <mdl-layout-header>
     <mdl-layout-header-row>
-      <mdl-layout-title>Awesome Todos</mdl-layout-title>
+      <mdl-layout-title>{{title}}</mdl-layout-title>
       <mdl-layout-spacer></mdl-layout-spacer>
+      <nav class="mdl-navigation" *ngIf="auth?.user?.username != null">
+        <a class="mdl-navigation__link" routerLink="todo">Todos</a>
+      </nav>
+      <nav class="mdl-navigation" *ngIf="auth?.user?.username != null">
+        <a class="mdl-navigation__link" routerLink="profile">{{auth.user.username}}</a>
+      </nav>
       <nav class="mdl-navigation">
-        <a class="mdl-navigation__link">Logout</a>
+        <a class="mdl-navigation__link" *ngIf="auth?.user?.username === null"
+           (click)="login()">
+          Login
+        </a>
+        <a class="mdl-navigation__link" *ngIf="auth?.user?.username !== null"
+           (click)="logout()">
+          Logout
+        </a>
       </nav>
     </mdl-layout-header-row>
   </mdl-layout-header>
   <mdl-layout-drawer>
-    <mdl-layout-title>Title</mdl-layout-title>
+    <mdl-layout-title>{{title}}</mdl-layout-title>
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link">Link</a>
     </nav>
