@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MdlModule } from '@angular-mdl/core';
 import { TodoRoutingModule } from './todo-routing.module';
 import { TodoComponent } from './todo.component';
 import { TodoFooterComponent } from './todo-footer/todo-footer.component';
@@ -15,7 +16,8 @@ import { TodoListComponent } from './todo-list/todo-list.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    TodoRoutingModule
+    MdlModule,
+    TodoRoutingModule,
   ],
   declarations: [
     TodoComponent,
