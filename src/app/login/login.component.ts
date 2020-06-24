@@ -20,15 +20,16 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.service.loginWithCredentials(this.username, this.password).then(auth => {
-      const redirectUrl = (auth.redirectUrl === null) ? '/' : auth.redirectUrl;
-      if (!auth.hasError) {
-        this.router.navigate([redirectUrl]);
-        localStorage.removeItem('redirectUrl');
-      } else {
+    this.service
+      .loginWithCredentials(this.username, this.password)
+      .subscribe(auth => {
         this.auth = Object.assign({}, auth);
+        // const redirectUrl = (auth.redirectUrl === null) ? '/' : auth.redirectUrl;
+        if (!auth.hasError) {
+          this.router.navigate(['todo']);
+        }
       }
-    });
+    );
   }
 
   clearUsername() {
