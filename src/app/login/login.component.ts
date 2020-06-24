@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   defaultUsernameColor = true;
   defaultPasswordColor = true;
   auth: Auth;
+  photo = '/assets/login_default_bg.jpg';
   constructor(@Inject('auth') private service, private router: Router) { }
 
   ngOnInit(): void {
