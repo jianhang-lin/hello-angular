@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class PlaygroundComponent implements OnInit {
 
   birthday = new Date();
+  pi = 3.141592627;
   constructor() { }
 
   ngOnInit(): void {
