@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { MdlModule } from '@angular-mdl/core';
+import { SharedModule } from '../shared/shared.module';
 import { TodoRoutingModule } from './todo-routing.module';
 import { TodoComponent } from './todo.component';
 import { TodoFooterComponent } from './todo-footer/todo-footer.component';
@@ -11,12 +8,10 @@ import { TodoService } from './todo.service';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 
+
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    MdlModule,
+    SharedModule,
     TodoRoutingModule,
   ],
   declarations: [
