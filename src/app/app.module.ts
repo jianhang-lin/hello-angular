@@ -5,14 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MdlModule } from '@angular-mdl/core';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
+import { LoginModule } from './login/login.module';
 import { TodoModule } from './todo/todo.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +20,7 @@ import { LoginComponent } from './login/login.component';
     MdlModule,
     AppRoutingModule,
     CoreModule,
+    LoginModule,
     TodoModule,
   ],
   providers: [
