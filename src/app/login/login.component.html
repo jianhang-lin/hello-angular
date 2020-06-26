@@ -50,6 +50,7 @@
       required
       [(ngModel)]="username"
       #usernameRef = "ngModel"
+      (focus)="clearUsername()"
     >
     </mdl-textfield>
     <div *ngIf="auth?.hasError">{{auth.errMsg}}</div>
@@ -61,6 +62,7 @@
       required
       [(ngModel)]="password"
       #passwordRef = "ngModel"
+      (focus)="clearPassword()"
     >
     </mdl-textfield>
     <button

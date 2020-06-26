@@ -1,27 +1,38 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth } from '../domain/entities';
+import { Subscription } from 'rxjs';
+import { Auth, Image } from '../domain/entities';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnDestroy {
 
   username = '请输入用户名';
   password = '请输入密码';
   defaultUsernameColor = true;
   defaultPasswordColor = true;
   auth: Auth;
+  slides: Image[] = [];
   photo = '/assets/login_default_bg.jpg';
-  constructor(@Inject('auth') private service, private router: Router) { }
+  subscription: Subscription;
+  constructor(@Inject('auth') private authService,
+              @Inject('bing') private bingService,
+              private router: Router) {
+    this.bingService.getImageUrl().subscribe((images: Image[]) => {
+      this.slides = [...images];
+      this.rotateImages(this.slides);
+    });
+  }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onSubmit() {
-    this.service
+    this.authService
       .loginWithCredentials(this.username, this.password)
       .subscribe(auth => {
         this.auth = Object.assign({}, auth);
@@ -41,5 +52,14 @@ export class LoginComponent implements OnInit {
   clearPassword() {
     this.password = '';
     this.defaultPasswordColor = false;
+  }
+
+  rotateImages(arr: Image[]) {
+    const length = arr.length;
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % length;
+      this.photo = this.slides[i].contentUrl;
+    }, 4000);
   }
 }
