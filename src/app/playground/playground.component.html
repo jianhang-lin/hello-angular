@@ -15,3 +15,10 @@
 <p>pi (.5-5): {{pi | number: '.5-5'}}</p>
 <p>pi (2.10-10): {{pi | number: '2.10-10'}}</p>
 <p>pi (.3-3): {{pi | number: '.3-3'}}</p>
+
+<hr>
+
+<div [@signal]="signal"
+  class="traffic-light"></div>
+<button (click)="onGo()">Go</button>
+<button (click)="onStop()">Stop</button>
