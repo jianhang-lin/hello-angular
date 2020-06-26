@@ -1,5 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { AuthGuardService } from './auth-guard.service';
@@ -9,7 +10,8 @@ import { AuthGuardService } from './auth-guard.service';
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: 'auth', useClass: AuthService },
