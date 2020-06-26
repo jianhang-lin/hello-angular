@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Image } from '../domain/entities';
 
 @Injectable({
@@ -17,6 +17,11 @@ export class BingImageService {
   }
 
   getImageUrl(): Observable<Image[]> {
-    return this.http.get<Image[]>(this.imageUrl, {headers: this.headers});
+    // return this.http.get<Image[]>(this.imageUrl, {headers: this.headers});
+    const images: Image[] = [
+      {contentUrl: '/assets/login_default_bg.jpg', name: '1'},
+      {contentUrl: '/assets/login_default_bg.jpg', name: '2'},
+    ];
+    return of(images);
   }
 }
