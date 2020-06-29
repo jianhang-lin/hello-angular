@@ -1,9 +1,11 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Auth, Image } from '../domain/entities';
-
+import { MdlDialogReference, MdlDialogService } from '@angular-mdl/core';
+import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +33,7 @@ export class LoginComponent implements OnDestroy {
   loginBtnState = 'inactive';
   constructor(@Inject('auth') private authService,
               @Inject('bing') private bingService,
+              private dialogService: MdlDialogService,
               private router: Router) {
     this.bingService.getImageUrl().subscribe((images: Image[]) => {
       this.slides = [...images];
@@ -76,5 +79,19 @@ export class LoginComponent implements OnDestroy {
 
   toggleLoginState(btnState: boolean) {
     this.loginBtnState = btnState ? 'active' : 'inactive';
+  }
+
+  register($event: MouseEvent) {
+    const pDialog = this.dialogService.showCustomDialog({
+      component: RegisterDialogComponent,
+      isModal: true,
+      styles: {width: '350px'},
+      clickOutsideToClose: true,
+      enterTransitionDuration: 400,
+      leaveTransitionDuration: 400
+    });
+    pDialog.pipe(map((dialogReference: MdlDialogReference) => {
+      console.log('dialog visible', dialogReference);
+    }));
   }
 }

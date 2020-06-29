@@ -4,6 +4,7 @@ import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 import { BingImageService } from './bing-image.service';
 import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
   ],
   imports: [
     SharedModule,
-    LoginRoutingModule
+    LoginRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
