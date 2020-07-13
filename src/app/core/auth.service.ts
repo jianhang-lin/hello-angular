@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable, ReplaySubject} from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { Auth, User } from '../domain/entities';
 
 @Injectable({
@@ -51,5 +51,23 @@ export class AuthService {
       this.subject.next(this.auth);
       return this.auth;
     }));
+  }
+
+  register(username: string, password: string): Observable<Auth> {
+    const toAddUser = {
+      username,
+      password
+    };
+    return this.userSerivce.findUser(username).pipe(
+      filter(user => user === null),
+      switchMap(user => {
+        return this.userSerivce.addUser(toAddUser).pipe(
+          map((u: User) => {
+            this.auth = Object.assign({}, {user: u, hasError: false, errMsg: null, redirectUrl: null});
+            this.subject.next(this.auth);
+            return this.auth;
+          })
+        );
+      }));
   }
 }

@@ -64,7 +64,7 @@ export class RegisterDialogComponent implements OnInit {
       .register(
         this.form.get('username').value,
         this.form.get('passwords').get('password').value)
-      .subscription(auth => {
+      .subscribe(auth => {
         this.processingRegister = false;
         this.statusMessage = 'you are registered and will be singed in..';
         setTimeout(() => {
