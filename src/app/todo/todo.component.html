@@ -1,14 +1,13 @@
 <section class="todoapp">
   <app-todo-header
     placeholder="What do you want"
-    (textChanges)="onTextChanges($event)"
-    (doEnterUp)="addTodo()">
+    (doEnterUp)="addTodo($event)">
   </app-todo-header>
   <app-todo-list
-    [todos]="todos"
+    [todos]="todos | async"
     (doRemoveTodo)="removeTodo($event)"
     (doToggleTodo)="toggleTodo($event)"
     (doToggleAll)="toggleAll()">
   </app-todo-list>
-  <app-todo-footer [itemCount]="todos?.length" (doClear)="clearCompleted()"></app-todo-footer>
+  <app-todo-footer [itemCount]="(todos | async)?.length" (doClear)="clearCompleted()"></app-todo-footer>
 </section>

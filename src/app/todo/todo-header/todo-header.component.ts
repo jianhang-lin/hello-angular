@@ -14,7 +14,7 @@ export class TodoHeaderComponent implements OnInit {
   @Input() placeholder = 'What needs to be done?';
   @Input() delay = 300;
   @Output() textChanges = new EventEmitter<string>();
-  @Output() doEnterUp = new EventEmitter<boolean>();
+  @Output() doEnterUp = new EventEmitter<string>();
   constructor(private elementRef: ElementRef) {
     const event$ = fromEvent(elementRef.nativeElement, 'keyup')
         .pipe(map(() => this.inputValue), debounceTime(this.delay));
@@ -27,7 +27,7 @@ export class TodoHeaderComponent implements OnInit {
   }
 
   enterUp() {
-    this.doEnterUp.emit(true);
+    this.doEnterUp.emit(this.inputValue);
     this.inputValue = '';
   }
 }

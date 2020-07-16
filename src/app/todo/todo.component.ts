@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { from, Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 import { Todo } from '../domain/entities';
 
 @Component({
@@ -10,77 +10,50 @@ import { Todo } from '../domain/entities';
 })
 export class TodoComponent implements OnInit {
 
-  todos: Todo[] = [];
-  desc = '';
+  todos: Observable<Todo[]>;
+  // desc = '';
   constructor(@Inject('todoService') private service,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
-    this.route.params.forEach((params: Params) => {
+    /*this.route.params.forEach((params: Params) => {
       const filter = params.filter;
       this.filterTodos(filter);
-    });
-  }
-
-  addTodo() {
-    this.service
-      .addTodo(this.desc)
-      .subscribe(todo => {
-        this.todos = [...this.todos, todo];
-        this.desc = '';
+    });*/
+    this.route.params
+      .pipe(pluck('filter'))
+      .subscribe(filter => {
+        this.service.filterTodos(filter);
+        this.todos = this.service.todos;
       });
   }
 
-  toggleTodo(todo: Todo): Observable<Todo> {
-    const i = this.todos.indexOf(todo);
-    return this.service
-      .toggleTodo(todo)
-      .subscribe(t => {
-        this.todos = [...this.todos.slice(0, i), t, ...this.todos.slice(i + 1)];
-        return null;
-      });
+  addTodo(desc: string) {
+    this.service.addTodo(desc);
   }
 
-  removeTodo(todo: Todo): Observable<Todo> {
-    const i = this.todos.indexOf(todo);
-    return this.service
-      .deleteTodoById(todo.id)
-      .subscribe(() => {
-        this.todos = [...this.todos.slice(0, i), ...this.todos.slice(i + 1)];
-        return null;
-      });
+  toggleTodo(todo: Todo) {
+    this.service.toggleTodo(todo);
+  }
+
+  removeTodo(todo: Todo) {
+    this.service.deleteTodo(todo);
   }
 
   getTodos(): void {
-    this.service
-      .getTodos()
-      .subscribe(todos => {
-        this.todos = [...todos];
-      });
-  }
-
-  onTextChanges(value) {
-    this.desc = value;
+    this.service.getTodos();
   }
 
   filterTodos(filter: string): void {
-    this.service
-      .filterTodos(filter)
-      .subscribe(todos => {
-        this.todos = [...todos];
-      });
+    this.service.filterTodos(filter);
   }
 
   clearCompleted() {
-    const completedTodos = this.todos.filter(todo => todo.completed === true);
-    const activeTodos = this.todos.filter(todo => todo.completed === false);
-    from(completedTodos).pipe(
-      mergeMap(todo => this.service.deleteTodoById(todo.id))
-    ).subscribe(() => this.todos = [...activeTodos]);
+    this.service.clearCompleted();
   }
 
   toggleAll() {
-    from(this.todos).pipe(map(todo => this.toggleTodo(todo))).subscribe(() => console.log('success toggleAll.'));
+    this.service.toggleAll();
   }
 }
