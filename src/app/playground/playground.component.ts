@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { interval, Subscription } from 'rxjs';
+import { interval } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -32,17 +32,14 @@ import { tap } from 'rxjs/operators';
     ])
   ]
 })
-export class PlaygroundComponent implements OnDestroy {
+export class PlaygroundComponent {
 
   birthday = new Date();
   pi = 3.141592627;
   signal: string;
-  clock: number;
-  subscription: Subscription;
+  clock = interval(1000)
+    .pipe(tap(_ => console.log('observable created')));
   constructor() {
-    this.subscription = interval(1000)
-      .pipe(tap(_ => console.log('observable created')))
-      .subscribe(value => this.clock = value);
   }
 
   onGo() {
@@ -51,11 +48,5 @@ export class PlaygroundComponent implements OnDestroy {
 
   onStop() {
     this.signal = 'stop';
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription !== undefined) {
-      this.subscription.unsubscribe();
-    }
   }
 }
