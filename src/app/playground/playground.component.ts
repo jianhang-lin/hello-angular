@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { interval, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-playground',
@@ -30,14 +32,17 @@ import { animate, keyframes, state, style, transition, trigger } from '@angular/
     ])
   ]
 })
-export class PlaygroundComponent implements OnInit {
+export class PlaygroundComponent implements OnDestroy {
 
   birthday = new Date();
   pi = 3.141592627;
   signal: string;
-  constructor() { }
-
-  ngOnInit(): void {
+  clock: number;
+  subscription: Subscription;
+  constructor() {
+    this.subscription = interval(1000)
+      .pipe(tap(_ => console.log('observable created')))
+      .subscribe(value => this.clock = value);
   }
 
   onGo() {
@@ -46,5 +51,11 @@ export class PlaygroundComponent implements OnInit {
 
   onStop() {
     this.signal = 'stop';
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription !== undefined) {
+      this.subscription.unsubscribe();
+    }
   }
 }
